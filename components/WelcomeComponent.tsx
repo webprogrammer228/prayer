@@ -5,6 +5,9 @@ import {styles} from '../styles/styles';
 import {FormData, RootStackParamList} from '../types/type';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {signedUp, signUp} from '../store/actionCreators';
+
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 
 const WelcomeComponent = ({navigation}: Props) => {
@@ -19,8 +22,13 @@ const WelcomeComponent = ({navigation}: Props) => {
       email: '',
     },
   });
+  const dispatch = useDispatch();
+  const dataFromStore = useSelector((store: any) => store.registerUser);
 
-  const onSubmit = async (data: FormData) => console.log(data);
+  const onSubmit = async (data: FormData) => {
+    dispatch(signedUp({...data}));
+    console.log('Data from storage', dataFromStore);
+  };
 
   return (
     <ScrollView style={styles.form}>

@@ -24,4 +24,8 @@ export type RegisterResponse = {
   id: number;
 };
 
-export type UserInitialState = FormData & {error: null | string};
+export type UserInitialState = {
+  data: FormData;
+  isLoading: boolean;
+  error: null | string;
+};

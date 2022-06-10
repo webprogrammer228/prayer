@@ -1,10 +1,10 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {authMiddleware} from './authMiddleware';
-import {userReducer} from './reducers/userReducer';
+import {signUpReducer} from './reducers/signUpReducer';
 import {rootSaga} from './sagas';
 
 const rootReducer = combineReducers({
-  users: userReducer,
+  registerUser: signUpReducer,
 });
 
 const composeEnhancers =

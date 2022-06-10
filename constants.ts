@@ -1,1 +1,1 @@
-export const URL = process.env['$URL '];
+export const URL = 'https://prayer.herokuapp.com';
