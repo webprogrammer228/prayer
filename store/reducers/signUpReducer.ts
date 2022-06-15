@@ -8,6 +8,7 @@ const initialState: UserInitialState = {
     password: '',
   },
   isLoading: false,
+  isAuth: false,
   error: null,
 };
 
@@ -15,7 +16,6 @@ export const signUpReducer = (
   state = initialState,
   action: {type: string; payload: any},
 ) => {
-  console.log('action from reducer', action);
   switch (action.type) {
     case actions.USER_SIGNUP: {
       return {
@@ -24,7 +24,6 @@ export const signUpReducer = (
       };
     }
     case actions.USER_SIGNUP_SUCCESS: {
-      console.log(action.payload);
       return {
         ...state,
         data: {...action.payload},
@@ -32,10 +31,11 @@ export const signUpReducer = (
       };
     }
     case actions.USER_SIGNUP_FAILED: {
+      const {error} = action.payload;
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
+        error: error,
       };
     }
     case actions.USER_SIGNED_UP: {
@@ -51,6 +51,33 @@ export const signUpReducer = (
         },
       };
     }
+    case actions.USER_SIGN_IN:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case actions.USER_SIGN_IN_SUCCESS: {
+      const {email, password} = action.payload;
+      return {
+        ...state,
+        data: {
+          email: email,
+          password: password,
+        },
+        isLoading: false,
+        isAuth: true,
+      };
+    }
+    case actions.USER_SIGN_IN_FAILED: {
+      const {error} = action.payload;
+      return {
+        ...state,
+        isLoading: false,
+        isAuth: false,
+        error: error,
+      };
+    }
+
     default:
       return state;
   }

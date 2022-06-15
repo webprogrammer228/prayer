@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {Text, ScrollView, View, TextInput, Button} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from '../styles/styles';
 import {FormData, RootStackParamList} from '../types/type';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {signedUp, signUp} from '../store/actionCreators';
+import {signedUp} from '../store/actionCreators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 
@@ -27,7 +28,7 @@ const WelcomeComponent = ({navigation}: Props) => {
 
   const onSubmit = async (data: FormData) => {
     dispatch(signedUp({...data}));
-    console.log('Data from storage', dataFromStore);
+    navigation.navigate('Auth');
   };
 
   return (
@@ -37,6 +38,11 @@ const WelcomeComponent = ({navigation}: Props) => {
         If you haven't registered yet, please complete the registration form
         below.
       </Text>
+      {dataFromStore && dataFromStore.error !== null && (
+        <Text style={styles.warning}>
+          Данный пользователь уже есть в системе
+        </Text>
+      )}
       <Controller
         control={control}
         rules={{

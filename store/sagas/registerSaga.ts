@@ -1,24 +1,32 @@
-import {put, call, takeEvery} from 'redux-saga/effects';
+import {put, call, takeLatest} from 'redux-saga/effects';
 import {registerApi} from '../../api/registerApi';
-import {signUpFailed, signUpSuccess} from '../actionCreators';
-import {RegisterResponse, FormData} from '../../types/type';
+import {
+  signedUpActionType,
+  signUpFailed,
+  signUpSuccess,
+} from '../actionCreators';
+import {RegisterResponse, RegisterResponseError} from '../../types/type';
+import {actions} from '../actions/actions';
+import {storeData} from '../../helpers';
 import {AxiosResponse} from 'axios';
 
-// приходит и тип и payload, поэтому в параметре функции нужно деструктурировать и типизировать
-export function* registerUser(payload?: {
-  name: string;
-  email: string;
-  password: string;
-}) {
-  console.log('Start saga');
-  console.log('payload', payload);
+export function* registerUserWatcher() {
+  yield takeLatest(actions.USER_SIGNED_UP, registerUser);
+}
+
+export function* registerUser({payload}: signedUpActionType) {
   try {
-    const response: AxiosResponse<RegisterResponse> = yield call(
-      registerApi,
-      payload,
-    );
-    yield put(signUpSuccess(response.data));
-    console.log('response data', response);
+    const response: AxiosResponse<RegisterResponse> &
+      AxiosResponse<RegisterResponseError> = yield call(registerApi, {
+      ...payload,
+    });
+    if (!response.data.message) {
+      yield put(signUpSuccess(response.data));
+      storeData(response.data.token).then(token => token);
+      console.log('response data', response.data);
+    } else {
+      yield put(signUpFailed(response.data.message));
+    }
   } catch (e: any) {
     yield put(signUpFailed(e));
     console.log('error', e);

@@ -2,9 +2,11 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {authMiddleware} from './authMiddleware';
 import {signUpReducer} from './reducers/signUpReducer';
 import {rootSaga} from './sagas';
+import {columnsReducer} from './reducers/columnsReducer';
 
 const rootReducer = combineReducers({
   registerUser: signUpReducer,
+  columns: columnsReducer,
 });
 
 const composeEnhancers =
