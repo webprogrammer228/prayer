@@ -10,11 +10,17 @@ export type RootStackParamList = {
   Welcome: undefined;
   Auth: undefined;
   MyDesk: undefined;
+  CreateColumn: undefined;
 };
 
 export type Column = {
   title: string;
-  description: string | null;
+  description: string;
+  prayerId?: number;
+};
+
+export type ColumnResponse = Column & {
+  user: number;
   id: number;
 };
 

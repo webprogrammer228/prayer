@@ -4,7 +4,6 @@ import {
   signInFailed,
   signInSuccess,
   signInSuccessActionType,
-  signUpFailed,
 } from '../actionCreators';
 import {AxiosResponse} from 'axios';
 import {storeData} from '../../helpers';

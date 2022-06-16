@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {Text, ScrollView, View, TextInput, Button} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from '../styles/styles';
 import {FormData, RootStackParamList} from '../types/type';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';

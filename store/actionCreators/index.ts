@@ -5,11 +5,18 @@ import {
   AuthResponse,
   AuthType,
   ColumnsInitialState,
+  Column,
 } from '../../types/type';
+
+export type ActionsTypes = getColumnsActionType | createColumnsActionType;
 
 export type signedUpActionType = ReturnType<typeof signedUp>;
 export type signInSuccessActionType = ReturnType<typeof signInSuccess>;
 export type getColumnsActionType = ReturnType<typeof getColumns>;
+export type createColumnsActionType =
+  | ReturnType<typeof createColumn>
+  | ReturnType<typeof createColumnSuccess>
+  | ReturnType<typeof createColumnFailed>;
 
 export const signedUp = (data: FormData) => {
   return {type: actions.USER_SIGNED_UP, payload: {...data}};
@@ -36,7 +43,6 @@ export const signInFailed = (error: string) => {
 };
 
 export const getColumns = () => {
-  console.log('action');
   return {type: actions.GET_COLUMNS};
 };
 
@@ -46,4 +52,17 @@ export const getColumnsSuccess = (data: ColumnsInitialState) => {
 
 export const getColumnsFailed = (error: string) => {
   return {type: actions.GET_COLUMNS_FAILED, payload: {error}};
+};
+
+export const createColumn = (data: Column) => {
+  console.log('payload from action creator', data);
+  return {type: actions.CREATE_COLUMN, payload: data};
+};
+
+export const createColumnSuccess = (data: Column) => {
+  return {type: actions.CREATE_COLUMN_SUCCESS, payload: {...data}};
+};
+
+export const createColumnFailed = (error: string) => {
+  return {type: actions.CREATE_COLUMN_FAILED, payload: {error}};
 };

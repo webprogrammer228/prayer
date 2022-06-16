@@ -4,10 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Col, ColumnsInitialState, RootStackParamList} from '../types/type';
 import {RootState} from '../store';
 import {getColumns} from '../store/actionCreators';
-import {getColumnsApi} from '../api/columns';
 import {styles} from '../styles/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import PlusLogo from './logos/PlusLogo';
 
 type DataType = {
   state: ColumnsInitialState;

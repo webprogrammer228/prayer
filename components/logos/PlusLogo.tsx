@@ -1,14 +1,18 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
+import {useNavigation} from '@react-navigation/native';
 
-const PlusLogo = (props: any) => {
+const PlusLogo = (props: any, {screen}: {screen: string}) => {
+  const navigation = useNavigation();
   return (
     <Svg
       width={16}
       height={16}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}>
+      {...props}
+      // @ts-ignore
+      onPress={() => navigation.navigate('CreateColumn', screen)}>
       <Path
         fillRule="evenodd"
         clipRule="evenodd"

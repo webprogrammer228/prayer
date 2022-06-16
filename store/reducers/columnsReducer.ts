@@ -1,11 +1,12 @@
 import {ColumnsInitialState} from '../../types/type';
 import {actions} from '../actions/actions';
+import {ActionsTypes} from '../actionCreators';
 
 const initialState: ColumnsInitialState = [];
 
 export const columnsReducer = (
   state = initialState,
-  action: {type: string; payload: any},
+  action: {type: string; payload: ActionsTypes},
 ) => {
   switch (action.type) {
     case actions.GET_COLUMNS: {
@@ -15,6 +16,7 @@ export const columnsReducer = (
     }
     case actions.GET_COLUMNS_SUCCESS: {
       return {
+        // @ts-ignore
         state: [...action.payload],
       };
     }
@@ -22,6 +24,22 @@ export const columnsReducer = (
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case actions.CREATE_COLUMN: {
+      return {
+        ...state,
+      };
+    }
+    case actions.CREATE_COLUMN_SUCCESS: {
+      return {
+        // @ts-ignore
+        state: [...state.state, action.payload],
+      };
+    }
+    case actions.CREATE_COLUMN_FAILED: {
+      return {
+        ...state,
       };
     }
     default:
